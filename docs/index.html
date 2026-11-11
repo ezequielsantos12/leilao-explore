@@ -10,110 +10,143 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-:root{--bg:#F4F6F5;--card:#fff;--ink:#12201C;--muted:#5A6762;--line:#DDE3DF;--chip:#EAF0ED;
---acc:#0E6B4F;--acc-ink:#fff;--soft:#E3F1EA;--hot:#C2410C;--hot-soft:#FDEBDD;--blue:#1D5FBF;--blue-soft:#E4EDFA}
+:root{--bg:#F3F5F4;--card:#fff;--ink:#12201C;--muted:#5A6762;--line:#DDE3DF;--chip:#EAF0ED;
+--acc:#0E6B4F;--acc-ink:#fff;--soft:#E3F1EA;--hot:#C2410C;--hot-soft:#FDEBDD;--blue:#1D5FBF;--blue-soft:#E4EDFA;--ph:#DCE6E1;--ph-ink:#8AA399;--head:#0E6B4F;--head-ink:#fff}
 @media (prefers-color-scheme:dark){:root{--bg:#0E1714;--card:#16221E;--ink:#E7EEEA;--muted:#9DB0A8;--line:#2A3833;
---chip:#1F2D28;--acc:#3CCB8F;--acc-ink:#0B1A14;--soft:#173A2D;--hot:#F08A4B;--hot-soft:#3A2214;--blue:#7FB0FF;--blue-soft:#1A2A44}}
+--chip:#1F2D28;--acc:#3CCB8F;--acc-ink:#0B1A14;--soft:#173A2D;--hot:#F08A4B;--hot-soft:#3A2214;--blue:#7FB0FF;--blue-soft:#1A2A44;--ph:#1F2D28;--ph-ink:#4E655C;--head:#0B3D2E;--head-ink:#fff}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-header{position:sticky;top:0;z-index:5;background:var(--acc);color:var(--acc-ink);padding:calc(10px + env(safe-area-inset-top)) 16px 12px}
+padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+button,select,input{font-family:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--head);color:var(--head-ink);padding:calc(10px + env(safe-area-inset-top)) 16px 12px;display:flex;flex-direction:column;gap:10px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand{font-weight:800;font-size:19px;letter-spacing:.01em}
-.brand small{display:block;font-weight:500;font-size:12px;opacity:.85}
-.upd{font-size:12px;text-align:right;opacity:.9}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;letter-spacing:.03em}
+.brand span{opacity:.8}
+.upd{font-size:11.5px;text-align:right;opacity:.9;line-height:1.3}
+.busca{display:flex;gap:8px}
+.busca input{flex:1;min-width:0;height:42px;border:0;border-radius:10px;padding:0 12px;font-size:15px;background:#fff;color:#12201C}
+.busca button{height:42px;border:1px solid rgba(255,255,255,.5);background:transparent;color:var(--head-ink);border-radius:10px;padding:0 14px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.busca button.on{background:#fff;color:#0E6B4F}
 .filters{display:flex;gap:8px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;
-padding:7px 13px;font:600 14px inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
+padding:8px 14px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
+.chip small{color:var(--muted);font-weight:500}
 .chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.row2{display:flex;gap:8px;padding:6px 16px 0}
-select{flex:1;min-width:0;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);
-font:500 14px inherit;font-family:inherit;padding:0 8px}
-.sum{display:flex;gap:8px;padding:12px 16px 4px;flex-wrap:wrap}
-.sum span{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--chip)}
-.sum b{font-variant-numeric:tabular-nums}
-main{padding:8px 16px;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;position:relative}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--chip);color:var(--muted)}
-.tag.new{background:var(--hot);color:#fff}
-.tag.price{background:var(--blue-soft);color:var(--blue)}
-.tag.fin{background:var(--soft);color:var(--acc)}
-.loc{font-weight:700;font-size:16px}
+.chip.on small{color:inherit;opacity:.75}
+.painel{margin:8px 16px 0;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.painel label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;color:var(--muted);min-width:0}
+.painel label.chk{flex-direction:row;align-items:center;gap:8px;font-size:14px;color:var(--ink);font-weight:600;grid-column:1/-1}
+.painel input[type=checkbox]{width:20px;height:20px;accent-color:var(--acc)}
+.painel .limpar{grid-column:1/-1;height:40px;border:1px solid var(--line);border-radius:10px;background:none;color:var(--ink);font-weight:700;cursor:pointer}
+select,.painel input[type=number]{width:100%;min-width:0;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:14px;font-weight:500;padding:0 8px}
+.barra{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px 2px}
+.barra b{font-size:16px}
+.barra small{display:block;color:var(--muted);font-size:12.5px}
+.barra select{width:auto;max-width:48%;height:38px}
+main{padding:8px 16px;display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.ph{position:relative;aspect-ratio:16/10;background:var(--ph);color:var(--ph-ink);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sobre{position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;max-width:calc(100% - 64px)}
+.selo{font-size:12px;font-weight:800;padding:4px 8px;border-radius:7px;background:#fff;color:#12201C}
+.selo.new{background:#C2410C;color:#fff}
+.selo.off{position:absolute;right:10px;bottom:10px;background:#12201C;color:#fff;font-size:14px}
+.star{position:absolute;top:8px;right:8px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#12201C;font-size:20px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;z-index:2}
+.star.on{color:#C2410C}
+.corpo{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.loc{font-weight:800;font-size:17px;line-height:1.25}
 .addr{font-size:13px;color:var(--muted)}
 .money{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.preco{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.preco{font-size:23px;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums}
 .aval{font-size:13px;color:var(--muted)}
-.aval s{opacity:.8}
-.desc{font-weight:800;color:var(--hot);font-size:14px;background:var(--hot-soft);padding:2px 8px;border-radius:6px}
-.meta{font-size:13px;color:var(--muted)}
-.acts{display:flex;gap:8px;margin-top:2px}
-.acts a,.acts button{flex:1;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);
-font:700 14px inherit;font-family:inherit;display:flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer}
-.acts a.pri{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
-.star{position:absolute;top:10px;right:10px;border:0;background:none;font-size:22px;cursor:pointer;line-height:1;padding:4px}
-.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 10px}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;
-padding-bottom:env(safe-area-inset-bottom);z-index:6}
-nav button{flex:1;border:0;background:none;color:var(--muted);font:600 12px inherit;font-family:inherit;padding:9px 0 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
-nav button i{font-style:normal;font-size:20px}
-nav button.on{color:var(--acc)}
-nav .badge{background:var(--hot);color:#fff;border-radius:999px;font-size:10.5px;padding:0 6px;margin-left:3px}
-.gone .loc{text-decoration:line-through;opacity:.7}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--chip);color:var(--ink)}
+.tag.fin{background:var(--soft);color:var(--acc)}
+.tag.price{background:var(--blue-soft);color:var(--blue)}
+.tag.new{background:var(--hot);color:#fff}
 .tag.site{background:var(--blue-soft);color:var(--blue)}
-.snip{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.st{grid-column:1/-1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 14px}
-.st a{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px}
-.st a:last-child{border-bottom:0}.st small{color:var(--muted)}
+.acts{display:flex;gap:8px;margin-top:auto;padding-top:2px}
+.acts a{flex:1;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);
+font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.acts a.pri{flex:1.6;background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.snip{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 10px}
+.mais{grid-column:1/-1;height:46px;border:1px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink);font-weight:700;font-size:15px;cursor:pointer}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:6}
+nav button{flex:1;border:0;background:none;color:var(--muted);font-weight:600;font-size:11.5px;padding:8px 0 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+nav button.on{color:var(--acc)}
+nav .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--hot);color:#fff;border-radius:999px;font-size:10.5px;padding:0 6px}
+.gone .loc{text-decoration:line-through;opacity:.7}
+.st{grid-column:1/-1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px}
+.st summary{padding:10px 0;font-weight:700;cursor:pointer}
+.st a{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px}
+.st small{color:var(--muted);text-align:right}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:var(--muted)}
+.dot.ok{background:#1F9D6B}.dot.erro{background:#C2410C}.dot.atalho{background:var(--blue)}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
 <header>
   <div class="top">
-    <div class="brand">Leilão Explore<small>Caixa + leiloeiros · Pará</small></div>
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 34 34" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="11" r="10" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/><circle cx="12" cy="11" r="5.5" fill="#fff" fill-opacity=".3"/><path d="M12 11v19l4.6-4.4 3.1 6.8 3-1.3-3.1-6.7H26z" fill="#fff"/></svg>
+      <div>LEILÃO <span>EXPLORE</span></div>
+    </div>
     <div class="upd" id="upd">carregando…</div>
+  </div>
+  <div class="busca">
+    <input id="q" type="search" placeholder="Buscar bairro, rua ou cidade" aria-label="Buscar bairro, rua ou cidade">
+    <button id="btnFiltros" type="button" aria-expanded="false">Filtros</button>
   </div>
 </header>
 
 <div class="filters" id="cidades"></div>
-<div class="row2">
-  <select id="tipo"><option value="">Todos os tipos</option></select>
-  <select id="modal"><option value="">Todas as modalidades</option></select>
+
+<div class="painel" id="painel" hidden>
+  <label for="tipo">Tipo de imóvel<select id="tipo"></select></label>
+  <label for="modal">Tipo de leilão<select id="modal"></select></label>
+  <label for="max">Valor até (R$)<input id="max" type="number" inputmode="numeric" min="0" step="10000" placeholder="Sem limite"></label>
+  <label for="periodo">Contar como novo<select id="periodo">
+    <option value="1">Última busca</option><option value="3">3 dias</option><option value="7">7 dias</option><option value="30">30 dias</option>
+  </select></label>
+  <label class="chk" for="fin"><input type="checkbox" id="fin">Só os que aceitam financiamento</label>
+  <button class="limpar" id="limpar" type="button">Limpar filtros</button>
 </div>
-<div class="row2">
-  <select id="ordem">
+
+<div class="barra">
+  <div><b id="tit">Imóveis</b><small id="sub"></small></div>
+  <select id="ordem" aria-label="Ordenar">
     <option value="desc">Maior desconto</option>
     <option value="menor">Menor preço</option>
     <option value="maior">Maior preço</option>
     <option value="recente">Mais recentes</option>
   </select>
-  <select id="periodo" title="O que conta como novo">
-    <option value="1">Novos: última busca</option>
-    <option value="3">Novos: 3 dias</option>
-    <option value="7">Novos: 7 dias</option>
-    <option value="30">Novos: 30 dias</option>
-  </select>
 </div>
-<div class="sum" id="sum"></div>
 <main id="lista"></main>
 
 <nav>
-  <button data-aba="novos" class="on"><i>🆕</i><span>Novos<span class="badge" id="bNovos" hidden></span></span></button>
-  <button data-aba="todos"><i>🏦</i><span>Caixa</span></button>
-  <button data-aba="sites"><i>🌐</i><span>Sites</span></button>
-  <button data-aba="fav"><i>⭐</i><span>Favoritos</span></button>
-  <button data-aba="saiu"><i>🚫</i><span>Saíram</span></button>
+  <button data-aba="novos" class="on"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.6 6 .7-4.5 4.1 1.3 6L12 16.3 6.7 19.4l1.3-6L3.5 9.300l6-.7z"/></svg>Novos<span class="badge" id="bNovos" hidden></span></button>
+  <button data-aba="todos"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v9M19 10v9M9 19v-6h6v6M3 19h18"/></svg>Caixa</button>
+  <button data-aba="sites"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>Sites</button>
+  <button data-aba="fav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5S4 15.5 4 9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5c0 6-8 11-8 11z"/></svg>Favoritos</button>
+  <button data-aba="saiu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Saíram</button>
 </nav>
 
 <script>
 const PADRAO_CIDADES=["BELEM","ANANINDEUA"];
-const st={aba:"novos",cidades:new Set(PADRAO_CIDADES),tipo:"",modal:"",ordem:"desc",periodo:1};
+const st={aba:"novos",cidades:new Set(PADRAO_CIDADES),tipo:"",modal:"",ordem:"desc",periodo:1,q:"",max:0,fin:false,limite:30};
 let D=null,IM=[],S={sites:[],itens:[]},favs=new Set();
+const $=id=>document.getElementById(id);
 const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
-const nome=c=>c.toLowerCase().replace(/(^|\s)\S/g,m=>m.toUpperCase());
+const nome=c=>String(c||"").toLowerCase().replace(/(^|[\s(-])\S/g,m=>m.toUpperCase()).replace(/ (Do|Da|De|Dos|Das|E) /g,m=>m.toLowerCase());
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const limpo=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
 const dataBR=iso=>iso?iso.split("-").reverse().slice(0,2).join("/"):"";
+const MOD={"Leilão SFI - Edital Único":"Leilão","Licitação Aberta":"Licitação aberta","Venda Online":"Venda online","Venda Direta Online":"Venda direta"};
+const CASA='<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9 21v-6h6v6"/></svg>';
 try{favs=new Set(JSON.parse(localStorage.getItem("radar_favs")||"[]"));
  const s=JSON.parse(localStorage.getItem("radar_filtros")||"null");
  if(s){st.cidades=new Set(s.cidades);st.periodo=s.periodo||1;st.ordem=s.ordem||"desc"}}catch(e){}
@@ -121,7 +154,6 @@ function salvar(){try{localStorage.setItem("radar_favs",JSON.stringify([...favs]
  localStorage.setItem("radar_filtros",JSON.stringify({cidades:[...st.cidades],periodo:st.periodo,ordem:st.ordem}))}catch(e){}}
 
 function limiteNovos(){
-  // "última busca" = dia da última atualização; senão N dias antes dela
   const base=new Date(D.atualizado_iso+"T12:00:00");
   base.setDate(base.getDate()-(st.periodo-1));
   return base.toISOString().slice(0,10);
@@ -131,102 +163,118 @@ async function carregar(){
   const r=await fetch("dados.json?t="+Date.now(),{cache:"no-store"});
   D=await r.json();
   IM=D.imoveis.map(l=>Object.fromEntries(D.campos.map((c,i)=>[c,l[i]])));
+  IM.forEach(i=>i._b=limpo(i.cidade+" "+i.bairro+" "+i.endereco+" "+i.tipo+" "+i.id));
   try{const r2=await fetch("sites.json?t="+Date.now(),{cache:"no-store"});S=await r2.json()}catch(e){}
-  document.getElementById("upd").innerHTML="Atualizado<br><b>"+esc(D.atualizado)+"</b>";
+  (S.itens||[]).forEach(i=>i._b=limpo((i.cidade||"")+" "+i.titulo+" "+(i.texto||"")+" "+i.site));
+  $("upd").innerHTML="Caixa: <b>"+esc(D.atualizado)+"</b>"+(S.atualizado?"<br>Sites: <b>"+esc(String(S.atualizado).slice(0,10))+"</b>":"");
   montarFiltros();render();
 }
 
 function montarFiltros(){
   const cont={};IM.forEach(i=>cont[i.cidade]=(cont[i.cidade]||0)+1);
-  const cidades=Object.keys(cont).sort((a,b)=>(PADRAO_CIDADES.includes(b)-PADRAO_CIDADES.includes(a))||a.localeCompare(b));
-  const box=document.getElementById("cidades");
-  box.innerHTML=`<button class="chip ${st.cidades.size===0?"on":""}" data-c="*">Pará todo</button>`+
-    cidades.map(c=>`<button class="chip ${st.cidades.has(c)?"on":""}" data-c="${esc(c)}">${esc(nome(c))} · ${cont[c]}</button>`).join("");
-  box.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const c=b.dataset.c;
-    if(c==="*")st.cidades.clear();else st.cidades.has(c)?st.cidades.delete(c):st.cidades.add(c);
-    salvar();montarFiltros();render()};
-  const opts=(id,campo,label)=>{const el=document.getElementById(id),v=[...new Set(IM.map(i=>i[campo]))].sort();
-    el.innerHTML=`<option value="">${label}</option>`+v.map(x=>`<option ${st[id]===x?"selected":""}>${esc(x)}</option>`).join("")};
-  opts("tipo","tipo","Todos os tipos");opts("modal","modalidade","Todas as modalidades");
-  document.getElementById("ordem").value=st.ordem;document.getElementById("periodo").value=st.periodo;
+  const cidades=Object.keys(cont).sort((a,b)=>(PADRAO_CIDADES.includes(b)-PADRAO_CIDADES.includes(a))||cont[b]-cont[a]||a.localeCompare(b));
+  $("cidades").innerHTML=`<button class="chip ${st.cidades.size===0?"on":""}" data-c="*">Pará todo <small>${IM.length}</small></button>`+
+    cidades.map(c=>`<button class="chip ${st.cidades.has(c)?"on":""}" data-c="${esc(c)}">${esc(nome(c))} <small>${cont[c]}</small></button>`).join("");
+  const opts=(id,campo,label,fmt)=>{const v=[...new Set(IM.map(i=>i[campo]))].sort();
+    $(id).innerHTML=`<option value="">${label}</option>`+v.map(x=>`<option value="${esc(x)}" ${st[id]===x?"selected":""}>${esc(fmt?fmt(x):x)}</option>`).join("")};
+  opts("tipo","tipo","Todos");opts("modal","modalidade","Todos",x=>MOD[x]||x);
+  $("ordem").value=st.ordem;$("periodo").value=st.periodo;
 }
+$("cidades").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const c=b.dataset.c;
+  if(c==="*")st.cidades.clear();else st.cidades.has(c)?st.cidades.delete(c):st.cidades.add(c);
+  st.limite=30;salvar();montarFiltros();render()};
 
+const q=()=>limpo(st.q).split(/\s+/).filter(Boolean);
 function filtrar(lista){
-  return lista.filter(i=>(st.cidades.size===0||st.cidades.has(i.cidade))&&(!st.tipo||i.tipo===st.tipo)&&(!st.modal||i.modalidade===st.modal));
+  const t=q();
+  return lista.filter(i=>(st.cidades.size===0||st.cidades.has(i.cidade))&&(!st.tipo||i.tipo===st.tipo)&&(!st.modal||i.modalidade===st.modal)
+    &&(!st.max||i.preco<=st.max)&&(!st.fin||i.financiamento)&&t.every(p=>i._b.includes(p)));
 }
+function filtrarSites(lista){const t=q();return lista.filter(i=>(st.cidades.size===0||!i.cidade||st.cidades.has(i.cidade))&&t.every(p=>i._b.includes(p)))}
 
-function okCidade(i){return st.cidades.size===0||!i.cidade||st.cidades.has(i.cidade)}
+function estrela(id){return `<button class="star ${favs.has(id)?"on":""}" data-fav="${esc(id)}" aria-label="Favoritar">${favs.has(id)?"♥":"♡"}</button>`}
 function cardSite(i,lim){
   const novo=i.visto_em&&i.visto_em>=lim;
-  return `<article class="card">
-   <button class="star" data-fav="${esc(i.id)}" aria-label="Favoritar">${favs.has(i.id)?"⭐":"☆"}</button>
-   <div class="tags">${novo?`<span class="tag new">NOVO ${dataBR(i.visto_em)}</span>`:""}<span class="tag site">${esc(i.site)}</span>
-    ${i.preco_ant?`<span class="tag price">preço era ${esc(i.preco_ant)}</span>`:""}</div>
-   <div><div class="loc">${esc(i.titulo)}</div>${i.cidade?`<div class="addr">${esc(nome(i.cidade))}</div>`:""}</div>
-   ${i.preco?`<div class="money"><span class="preco">${esc(i.preco)}</span></div>`:""}
-   ${(i.precos||[]).length>1?`<div class="aval">Outros valores: ${i.precos.slice(1).map(esc).join(" · ")}</div>`:""}
-   <div class="snip">${esc(i.texto)}</div>
-   <div class="acts"><a class="pri" href="${esc(i.id)}" target="_blank" rel="noopener">Abrir no site</a></div>
-  </article>`;
+  return `<article class="card">${estrela(i.id)}
+   <div class="corpo">
+    <div class="tags" style="padding-right:44px">${novo?`<span class="tag new">NOVO ${dataBR(i.visto_em)}</span>`:""}<span class="tag site">${esc(i.site)}</span>
+     ${i.preco_ant?`<span class="tag price">preço era ${esc(i.preco_ant)}</span>`:""}</div>
+    <div><div class="loc">${esc(i.titulo)}</div>${i.cidade?`<div class="addr">${esc(nome(i.cidade))} · PA</div>`:""}</div>
+    ${i.preco?`<div class="money"><span class="preco">${esc(i.preco)}</span></div>`:""}
+    <div class="snip">${esc(i.texto)}</div>
+    <div class="acts"><a class="pri" href="${esc(i.id)}" target="_blank" rel="noopener">Abrir no site do leilão</a></div>
+   </div></article>`;
 }
 function card(i,lim){
   const novo=i.visto_em>=lim, link="https://venda-imoveis.caixa.gov.br/sistema/detalhe-imovel.asp?hdnOrigem=index&hdnimovel="+i.id;
-  const meta=[i.quartos?i.quartos+" qto(s)":"",i.area_privativa?i.area_privativa+" m² priv.":"",i.area_terreno?i.area_terreno+" m² terreno":""].filter(Boolean).join(" · ");
+  const foto="https://venda-imoveis.caixa.gov.br/fotos/F"+String(i.id).padStart(13,"0")+"21.jpg";
   const mapa="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(i.endereco+", "+i.bairro+", "+i.cidade+" - PA");
-  return `<article class="card">
-   <button class="star" data-fav="${i.id}" aria-label="Favoritar">${favs.has(i.id)?"⭐":"☆"}</button>
-   <div class="tags">${novo?`<span class="tag new">NOVO ${dataBR(i.visto_em)}</span>`:""}
-    ${i.preco_ant?`<span class="tag price">${i.preco<i.preco_ant?"↓":"↑"} preço era ${brl(i.preco_ant)}</span>`:""}
-    <span class="tag">${esc(i.tipo)}</span>${i.financiamento?`<span class="tag fin">Aceita financ.</span>`:""}</div>
-   <div><div class="loc">${esc(nome(i.bairro))} · ${esc(nome(i.cidade))}</div><div class="addr">${esc(i.endereco)}</div></div>
-   <div class="money"><span class="preco">${brl(i.preco)}</span>${i.desconto>0?`<span class="desc">-${Math.round(i.desconto)}%</span>`:""}</div>
-   <div class="aval">Avaliação: ${i.desconto>0?`<s>${brl(i.avaliacao)}</s>`:brl(i.avaliacao)} · ${esc(i.modalidade)}</div>
-   ${meta?`<div class="meta">${meta}</div>`:""}
-   <div class="acts"><a class="pri" href="${link}" target="_blank" rel="noopener">Ver na Caixa</a><a href="${mapa}" target="_blank" rel="noopener">Mapa</a></div>
-  </article>`;
+  const leilao=i.modalidade==="Leilão SFI - Edital Único";
+  const zap="https://wa.me/?text="+encodeURIComponent(`${i.tipo} em ${nome(i.bairro)}, ${nome(i.cidade)}/PA\n${leilao?"Lance mínimo":"Preço"}: ${brl(i.preco)}`+(i.desconto>0?` (${Math.round(i.desconto)}% abaixo da avaliação)`:"")+`\n${link}`);
+  const tags=[i.quartos?i.quartos+(i.quartos>1?" quartos":" quarto"):"",i.area_privativa?i.area_privativa.toLocaleString("pt-BR")+" m²":"",i.area_terreno?"terreno "+i.area_terreno.toLocaleString("pt-BR")+" m²":""].filter(Boolean);
+  return `<article class="card">${estrela(i.id)}
+   <div class="ph">${CASA}<img loading="lazy" alt="" src="${foto}" onerror="this.remove()">
+    <div class="sobre">${novo?`<span class="selo new">NOVO ${dataBR(i.visto_em)}</span>`:""}<span class="selo">${esc(MOD[i.modalidade]||i.modalidade)}</span></div>
+    ${i.desconto>0?`<span class="selo off">−${Math.round(i.desconto)}%</span>`:""}</div>
+   <div class="corpo">
+    <div><div class="kicker">${esc(i.tipo)} · ${esc(nome(i.cidade))}</div><div class="loc">${esc(nome(i.bairro))}</div><div class="addr">${esc(nome(i.endereco))}</div></div>
+    <div><div class="money"><span class="preco">${brl(i.preco)}</span></div>
+     <div class="aval">${leilao?"Lance mínimo":"Preço"} · avaliação ${i.desconto>0?`<s>${brl(i.avaliacao)}</s>`:brl(i.avaliacao)}</div></div>
+    <div class="tags">${i.preco_ant?`<span class="tag price">${i.preco<i.preco_ant?"↓":"↑"} era ${brl(i.preco_ant)}</span>`:""}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}${i.financiamento?`<span class="tag fin">Aceita financiamento</span>`:""}</div>
+    <div class="acts"><a class="pri" href="${link}" target="_blank" rel="noopener">Ver na Caixa</a><a href="${mapa}" target="_blank" rel="noopener">Mapa</a><a href="${zap}" target="_blank" rel="noopener">Enviar</a></div>
+   </div></article>`;
 }
 
 function render(){
-  const lim=limiteNovos(),el=document.getElementById("lista"),sum=document.getElementById("sum");
+  const lim=limiteNovos(),el=$("lista");
   const base=filtrar(IM),novos=base.filter(i=>i.visto_em>=lim);
-  const sItens=(S.itens||[]).filter(okCidade),sNovos=sItens.filter(i=>i.visto_em&&i.visto_em>=lim);
-  const b=document.getElementById("bNovos");b.hidden=!(novos.length+sNovos.length);b.textContent=novos.length+sNovos.length;
+  const sItens=filtrarSites(S.itens||[]),sNovos=sItens.filter(i=>i.visto_em&&i.visto_em>=lim);
+  const b=$("bNovos");b.hidden=!(novos.length+sNovos.length);b.textContent=novos.length+sNovos.length;
+  const onde=st.cidades.size===0?"no Pará":"em "+[...st.cidades].map(nome).join(", ");
+  $("ordem").hidden=st.aba==="sites"||st.aba==="saiu";
   if(st.aba==="sites"){
-    const ic={ok:"✅",erro:"⚠️",atalho:"🔗",aguardando:"⏳"};
     const lista=[...sItens].sort((a,b)=>(b.visto_em||"").localeCompare(a.visto_em||"")||a.site.localeCompare(b.site));
-    sum.innerHTML=`<span><b>${lista.length}</b> imóveis dos sites</span><span>🆕 <b>${sNovos.length}</b> novos</span>`+(S.atualizado?`<span>Robô: ${esc(S.atualizado)}</span>`:"");
-    el.innerHTML=`<div class="st">${(S.sites||[]).map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener"><span>${ic[x.status]||"•"} ${esc(x.nome)}</span>
-      <small>${x.status==="atalho"?"abrir busca":x.status==="aguardando"?"aguardando 1ª leitura":x.status==="erro"?"não consegui ler · abrir":x.qtd+" imóveis"+(x.novos?" · "+x.novos+" novos":"")}</small></a>`).join("")}</div>`+
-      (lista.length?lista.map(i=>cardSite(i,lim)).join(""):`<div class="empty">Ainda sem imóveis dos sites nessas cidades. Toque num site acima para abrir a busca.</div>`);
+    $("tit").textContent=lista.length+(lista.length===1?" imóvel":" imóveis")+" dos leiloeiros";$("sub").textContent=onde+(sNovos.length?" · "+sNovos.length+" novos":"");
+    const ok=(S.sites||[]).filter(x=>x.status==="ok").length;
+    el.innerHTML=`<details class="st"><summary>Sites monitorados: ${ok} de ${(S.sites||[]).length} lidos</summary>${(S.sites||[]).map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener"><span><i class="dot ${esc(x.status)}"></i>${esc(x.nome)}</span>
+      <small>${x.status==="atalho"?"abrir busca":x.status==="aguardando"?"aguardando 1ª leitura":x.status==="erro"?"não consegui ler · abrir":x.qtd+" imóveis"+(x.novos?" · "+x.novos+" novos":"")}</small></a>`).join("")}</details>`+
+      (lista.length?lista.map(i=>cardSite(i,lim)).join(""):`<div class="empty">Sem imóveis dos sites com esses filtros. Toque em "Pará todo" para ver todos.</div>`);
     return;
   }
   if(st.aba==="saiu"){
     const r=(D.removidos||[]).filter(i=>st.cidades.size===0||st.cidades.has(i.cidade)).sort((a,b)=>b.saiu_em.localeCompare(a.saiu_em));
-    sum.innerHTML=`<span><b>${r.length}</b> saíram da lista nos últimos 30 dias</span>`;
-    el.innerHTML=r.length?r.map(i=>`<article class="card gone"><div class="tags"><span class="tag">Saiu em ${dataBR(i.saiu_em)}</span><span class="tag">${esc(i.tipo)}</span></div>
-      <div class="loc">${esc(nome(i.bairro||""))} · ${esc(nome(i.cidade||""))}</div><div class="meta">Último preço: ${brl(i.preco||0)} · nº ${esc(i.id)}</div>
-      <div class="meta">Provavelmente vendido ou retirado.</div></article>`).join(""):`<div class="empty">Nenhum imóvel saiu da lista nessas cidades.</div>`;
+    $("tit").textContent=r.length+" saíram da lista";$("sub").textContent="últimos 30 dias · "+onde;
+    el.innerHTML=r.length?r.map(i=>`<article class="card gone"><div class="corpo"><div class="tags"><span class="tag">Saiu em ${dataBR(i.saiu_em)}</span><span class="tag">${esc(i.tipo)}</span></div>
+      <div class="loc">${esc(nome(i.bairro||""))} · ${esc(nome(i.cidade||""))}</div><div class="addr">Último preço: ${brl(i.preco||0)} · nº ${esc(i.id)}</div>
+      <div class="addr">Provavelmente vendido ou retirado.</div></div></article>`).join(""):`<div class="empty">Nenhum imóvel saiu da lista nessas cidades.</div>`;
     return;
   }
-  let l=st.aba==="novos"?novos:st.aba==="fav"?base.filter(i=>favs.has(i.id)):base;
-  if(st.aba==="fav")l=IM.filter(i=>favs.has(i.id));
+  let l=st.aba==="novos"?novos:st.aba==="fav"?IM.filter(i=>favs.has(i.id)):base;
   const extra=st.aba==="novos"?sNovos:st.aba==="fav"?(S.itens||[]).filter(i=>favs.has(i.id)):[];
   const ord={desc:(a,b)=>b.desconto-a.desconto,menor:(a,b)=>a.preco-b.preco,maior:(a,b)=>b.preco-a.preco,recente:(a,b)=>b.visto_em.localeCompare(a.visto_em)||b.desconto-a.desconto}[st.ordem];
   l=[...l].sort(ord);
-  const r=D.resumo||{};
-  sum.innerHTML=`<span><b>${l.length+extra.length}</b> imóveis</span><span>🆕 <b>${novos.length+sNovos.length}</b> novos</span>`+
-    (st.aba==="novos"&&r.preco_mudou?`<span>💲 <b>${r.preco_mudou}</b> mudaram de preço (todo PA)</span>`:"");
-  const vazio={novos:"Nenhum imóvel novo nessas cidades no período. O robô confere a lista toda manhã.",fav:"Toque na ☆ de um imóvel para guardar aqui.",todos:"Nenhum imóvel com esses filtros."}[st.aba];
-  const html=l.map(i=>card(i,lim)).join("")+extra.map(i=>cardSite(i,lim)).join("");
-  el.innerHTML=html||`<div class="empty">${vazio}</div>`;
+  const total=l.length+extra.length, r=D.resumo||{};
+  $("tit").textContent=total+({novos:" imóveis novos",fav:" favoritos",todos:" imóveis da Caixa"}[st.aba]);
+  $("sub").textContent=st.aba==="fav"?"guardados neste aparelho":onde+(st.aba==="novos"&&r.preco_mudou?" · "+r.preco_mudou+" mudaram de preço":"");
+  const vazio={novos:"Nenhum imóvel novo nessas cidades no período. O robô confere as listas toda manhã.",fav:"Toque no ♡ de um imóvel para guardar aqui.",todos:'Nenhum imóvel com esses filtros. Toque em "Pará todo" ou limpe os filtros.'}[st.aba];
+  const cards=l.map(i=>card(i,lim)).concat(extra.map(i=>cardSite(i,lim)));
+  el.innerHTML=cards.slice(0,st.limite).join("")+(cards.length>st.limite?`<button class="mais" id="mais">Mostrar mais (${cards.length-st.limite} restantes)</button>`:"")||`<div class="empty">${vazio}</div>`;
 }
 
-document.getElementById("lista").onclick=e=>{const b=e.target.closest("[data-fav]");if(!b)return;
+$("lista").onclick=e=>{
+  if(e.target.id==="mais"){st.limite+=30;render();return}
+  const b=e.target.closest("[data-fav]");if(!b)return;
   const id=b.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);salvar();render()};
-document.querySelector("nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;st.aba=b.dataset.aba;
+document.querySelector("nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;st.aba=b.dataset.aba;st.limite=30;
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));window.scrollTo(0,0);render()};
-["tipo","modal","ordem","periodo"].forEach(id=>document.getElementById(id).onchange=e=>{st[id]=id==="periodo"?+e.target.value:e.target.value;salvar();render()});
-carregar().catch(()=>{document.getElementById("lista").innerHTML='<div class="empty">Não consegui carregar a lista. Verifique a internet.</div>'});
+["tipo","modal","ordem","periodo"].forEach(id=>$(id).onchange=e=>{st[id]=id==="periodo"?+e.target.value:e.target.value;st.limite=30;salvar();marcar();render()});
+$("q").oninput=e=>{st.q=e.target.value;st.limite=30;render()};
+$("max").oninput=e=>{st.max=parseFloat(e.target.value)||0;st.limite=30;marcar();render()};
+$("fin").onchange=e=>{st.fin=e.target.checked;st.limite=30;marcar();render()};
+function marcar(){const n=[st.tipo,st.modal,st.max,st.fin].filter(Boolean).length;$("btnFiltros").textContent="Filtros"+(n?" ("+n+")":"");$("btnFiltros").classList.toggle("on",n>0||!$("painel").hidden)}
+$("btnFiltros").onclick=()=>{const p=$("painel");p.hidden=!p.hidden;$("btnFiltros").setAttribute("aria-expanded",String(!p.hidden));marcar()};
+$("limpar").onclick=()=>{st.tipo="";st.modal="";st.max=0;st.fin=false;$("tipo").value="";$("modal").value="";$("max").value="";$("fin").checked=false;st.limite=30;marcar();render()};
+carregar().catch(()=>{$("lista").innerHTML='<div class="empty">Não consegui carregar a lista. Verifique a internet.</div>'});
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
