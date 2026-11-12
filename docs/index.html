@@ -27,7 +27,7 @@ header{position:sticky;top:0;z-index:5;background:var(--head);color:var(--head-i
 .busca input{flex:1;min-width:0;height:42px;border:0;border-radius:10px;padding:0 12px;font-size:15px;background:#fff;color:#12201C}
 .busca button{height:42px;border:1px solid rgba(255,255,255,.5);background:transparent;color:var(--head-ink);border-radius:10px;padding:0 14px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
 .busca button.on{background:#fff;color:#0E6B4F}
-.filters{display:flex;gap:8px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:10px 16px 2px;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;
 padding:8px 14px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
@@ -40,11 +40,11 @@ padding:8px 14px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowra
 .painel input[type=checkbox]{width:20px;height:20px;accent-color:var(--acc)}
 .painel .limpar{grid-column:1/-1;height:40px;border:1px solid var(--line);border-radius:10px;background:none;color:var(--ink);font-weight:700;cursor:pointer}
 select,.painel input[type=number]{width:100%;min-width:0;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:14px;font-weight:500;padding:0 8px}
-.barra{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px 2px}
+.barra{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 16px 0}
 .barra b{font-size:16px}
 .barra small{display:block;color:var(--muted);font-size:12.5px}
 .barra select{width:auto;max-width:48%;height:38px}
-main{padding:8px 16px;display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+main{padding:8px 16px;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .ph{position:relative;aspect-ratio:16/10;background:var(--ph);color:var(--ph-ink);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -72,6 +72,31 @@ main{padding:8px 16px;display:grid;gap:14px;grid-template-columns:repeat(auto-fi
 font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .acts a.pri{flex:1.6;background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
 .snip{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.leilao{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.leilao.perto{border-color:var(--hot);background:var(--hot-soft)}
+.leilao b{font-size:14px}.leilao.perto b{color:var(--hot)}
+.leilao label{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);font-weight:600}
+.leilao input{flex:1;min-width:0;height:38px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14px;padding:0 8px}
+.leilao a{height:40px;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column;cursor:pointer;min-width:0}
+.mini .ph{aspect-ratio:16/9}
+.mini .ph svg{width:32px;height:32px}
+.mini .ph b{position:absolute;left:8px;right:8px;bottom:8px;font-size:12px;color:var(--muted);text-align:center}
+.mini .sobre{left:6px;top:6px;max-width:calc(100% - 48px)}
+.mini .selo{font-size:10.5px;padding:2px 6px;border-radius:5px}
+.mini .selo.off{right:6px;bottom:6px;font-size:12px}
+.mini .star{width:32px;height:32px;top:5px;right:5px;font-size:16px}
+.mini .mc{padding:6px 9px 8px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.mini .kicker{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .loc{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .loc.duas{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px}
+.mini .addr{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .preco{font-size:16px;margin-top:1px}
+.mini .dt{font-size:11.5px;font-weight:700;color:var(--muted);margin-top:2px}
+.mini .dt.perto{color:var(--hot)}
+#folha{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
+#folha .dentro{width:100%;max-width:520px;max-height:92%;overflow:auto;background:var(--bg);border-radius:18px 18px 0 0;padding:10px 12px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
+#folha .fechar{align-self:stretch;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer;flex:none}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 10px}
 .mais{grid-column:1/-1;height:46px;border:1px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink);font-weight:700;font-size:15px;cursor:pointer}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:6}
@@ -127,18 +152,21 @@ nav .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--hot);
 </div>
 <main id="lista"></main>
 
+<div id="folha" hidden><div class="dentro"><button class="fechar" id="fechar" type="button">Fechar ✕</button><div id="folhaCorpo"></div></div></div>
+
 <nav>
   <button data-aba="novos" class="on"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5.6 6 .7-4.5 4.1 1.3 6L12 16.3 6.7 19.4l1.3-6L3.5 9.300l6-.7z"/></svg>Novos<span class="badge" id="bNovos" hidden></span></button>
   <button data-aba="todos"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v9M19 10v9M9 19v-6h6v6M3 19h18"/></svg>Caixa</button>
   <button data-aba="sites"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>Sites</button>
-  <button data-aba="fav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5S4 15.5 4 9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5c0 6-8 11-8 11z"/></svg>Favoritos</button>
+  <button data-aba="fav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5S4 15.5 4 9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5c0 6-8 11-8 11z"/></svg>Favoritos<span class="badge" id="bFav" hidden></span></button>
   <button data-aba="saiu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Saíram</button>
 </nav>
 
 <script>
 const PADRAO_CIDADES=["BELEM","ANANINDEUA"];
-const st={aba:"novos",cidades:new Set(PADRAO_CIDADES),tipo:"",modal:"",ordem:"desc",periodo:1,q:"",max:0,fin:false,limite:30};
-let D=null,IM=[],S={sites:[],itens:[]},favs=new Set();
+let aberto=null;
+const st={aba:"novos",cidades:new Set(PADRAO_CIDADES),tipo:"",modal:"",ordem:"desc",periodo:1,q:"",max:0,fin:false,limite:40};
+let D=null,IM=[],S={sites:[],itens:[]},favs=new Set(),datas={};
 const $=id=>document.getElementById(id);
 const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const nome=c=>String(c||"").toLowerCase().replace(/(^|[\s(-])\S/g,m=>m.toUpperCase()).replace(/ (Do|Da|De|Dos|Das|E) /g,m=>m.toLowerCase());
@@ -147,10 +175,10 @@ const limpo=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase
 const dataBR=iso=>iso?iso.split("-").reverse().slice(0,2).join("/"):"";
 const MOD={"Leilão SFI - Edital Único":"Leilão","Licitação Aberta":"Licitação aberta","Venda Online":"Venda online","Venda Direta Online":"Venda direta"};
 const CASA='<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9 21v-6h6v6"/></svg>';
-try{favs=new Set(JSON.parse(localStorage.getItem("radar_favs")||"[]"));
+try{favs=new Set(JSON.parse(localStorage.getItem("radar_favs")||"[]"));datas=JSON.parse(localStorage.getItem("radar_datas")||"{}");
  const s=JSON.parse(localStorage.getItem("radar_filtros")||"null");
  if(s){st.cidades=new Set(s.cidades);st.periodo=s.periodo||1;st.ordem=s.ordem||"desc"}}catch(e){}
-function salvar(){try{localStorage.setItem("radar_favs",JSON.stringify([...favs]));
+function salvar(){try{localStorage.setItem("radar_favs",JSON.stringify([...favs]));localStorage.setItem("radar_datas",JSON.stringify(datas));
  localStorage.setItem("radar_filtros",JSON.stringify({cidades:[...st.cidades],periodo:st.periodo,ordem:st.ordem}))}catch(e){}}
 
 function limiteNovos(){
@@ -182,7 +210,7 @@ function montarFiltros(){
 }
 $("cidades").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const c=b.dataset.c;
   if(c==="*")st.cidades.clear();else st.cidades.has(c)?st.cidades.delete(c):st.cidades.add(c);
-  st.limite=30;salvar();montarFiltros();render()};
+  st.limite=40;salvar();montarFiltros();render()};
 
 const q=()=>limpo(st.q).split(/\s+/).filter(Boolean);
 function filtrar(lista){
@@ -191,6 +219,81 @@ function filtrar(lista){
     &&(!st.max||i.preco<=st.max)&&(!st.fin||i.financiamento)&&t.every(p=>i._b.includes(p)));
 }
 function filtrarSites(lista){const t=q();return lista.filter(i=>(st.cidades.size===0||!i.cidade||st.cidades.has(i.cidade))&&t.every(p=>i._b.includes(p)))}
+
+
+// ---- Data do leilão e lembrete no calendário ----
+const p2=n=>String(n).padStart(2,"0");
+function dataDoTexto(t){
+  // pega as datas "dd/mm/aaaa" (com hora, se tiver) e escolhe a próxima que ainda não passou
+  const re=/(\d{2})\/(\d{2})\/(\d{4})(?:\s*(?:às|[A-Za-zÁ-ú]{3}\s*-)?\s*(\d{1,2})\s*[:h]\s*(\d{2}))?/g;let m,l=[];
+  while((m=re.exec(t||"")))l.push(new Date(+m[3],+m[2]-1,+m[1],m[4]?+m[4]:9,m[5]?+m[5]:0));
+  if(!l.length)return null;l.sort((a,b)=>a-b);
+  return l.find(d=>d>=new Date())||l[l.length-1];
+}
+function dataLeilao(i){
+  if(datas[i.id]){const d=new Date(datas[i.id]);if(!isNaN(d))return d}
+  return i.texto?dataDoTexto(i.texto):null;
+}
+const paraInput=d=>d?`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}T${p2(d.getHours())}:${p2(d.getMinutes())}`:"";
+function falta(d){
+  const h=(d-new Date())/36e5;
+  if(h<0)return "já passou";if(h<1)return "é agora";if(h<48)return "faltam "+Math.round(h)+" h";
+  return "faltam "+Math.round(h/24)+" dias";
+}
+function ics(titulo,d,desc,link){
+  const u=x=>`${x.getUTCFullYear()}${p2(x.getUTCMonth()+1)}${p2(x.getUTCDate())}T${p2(x.getUTCHours())}${p2(x.getUTCMinutes())}00Z`;
+  const e=x=>String(x).replace(/\\/g,"\\\\").replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n");
+  const fim=new Date(d.getTime()+36e5);
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Leilao Explore//PT-BR","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
+   "UID:"+Date.now()+"-"+Math.round(d/1000)+"@leilao-explore","DTSTAMP:"+u(new Date()),"DTSTART:"+u(d),"DTEND:"+u(fim),
+   "SUMMARY:"+e("Leilão: "+titulo),"DESCRIPTION:"+e(desc+"\n"+link),"URL:"+link,
+   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+e("Leilão em 48 horas: "+titulo),"TRIGGER:-PT48H","END:VALARM",
+   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+e("Leilão em 2 horas: "+titulo),"TRIGGER:-PT2H","END:VALARM",
+   "END:VEVENT","END:VCALENDAR"].join("\r\n");
+}
+function blocoLeilao(i,titulo,desc,link){
+  if(!favs.has(i.id))return "";
+  const d=dataLeilao(i),h=d?(d-new Date())/36e5:null,perto=d&&h>=0&&h<=48;
+  const quando=d?d.toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"2-digit"})+" às "+p2(d.getHours())+":"+p2(d.getMinutes()):"";
+  return `<div class="leilao ${perto?"perto":""}">
+    <b>${d?"Leilão "+esc(quando)+" · "+falta(d):"Sem data de leilão informada"}</b>
+    <label>Data<input type="datetime-local" data-dt="${esc(i.id)}" value="${paraInput(d)}" aria-label="Data e hora do leilão"></label>
+    ${d&&h>0?`<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics(titulo,d,desc,link))}" download="leilao.ics">Lembrar 48h antes (calendário)</a>`:""}
+  </div>`;
+}
+
+function linhaData(i){
+  if(!favs.has(i.id))return "";
+  const d=dataLeilao(i);if(!d)return `<div class="dt">sem data de leilão</div>`;
+  const h=(d-new Date())/36e5;
+  return `<div class="dt ${h>=0&&h<=48?"perto":""}">Leilão ${p2(d.getDate())}/${p2(d.getMonth()+1)} · ${falta(d)}</div>`;
+}
+function mini(i,lim){
+  const novo=i.visto_em>=lim, foto="https://venda-imoveis.caixa.gov.br/fotos/F"+String(i.id).padStart(13,"0")+"21.jpg";
+  return `<article class="mini" data-abrir="${esc(i.id)}">${estrela(i.id)}
+   <div class="ph">${CASA}<img loading="lazy" alt="" src="${foto}" onerror="this.remove()">
+    <div class="sobre">${novo?`<span class="selo new">NOVO</span>`:""}</div>
+    ${i.desconto>0?`<span class="selo off">−${Math.round(i.desconto)}%</span>`:""}</div>
+   <div class="mc"><div class="kicker">${esc(i.tipo)} · ${esc(MOD[i.modalidade]||i.modalidade)}</div>
+    <div class="loc">${esc(nome(i.bairro))}</div><div class="addr">${esc(nome(i.cidade))}</div>
+    <div class="preco">${brl(i.preco)}</div>${linhaData(i)}</div></article>`;
+}
+function miniSite(i,lim){
+  const novo=i.visto_em&&i.visto_em>=lim;
+  return `<article class="mini" data-abrir="${esc(i.id)}">${estrela(i.id)}
+   <div class="ph">${CASA}<b>${esc(i.site)}</b>
+    <div class="sobre">${novo?`<span class="selo new">NOVO</span>`:""}</div></div>
+   <div class="mc"><div class="loc duas">${esc(i.titulo)}</div>
+    ${i.preco?`<div class="preco">${esc(i.preco.replace(/,00$/,""))}</div>`:""}${linhaData(i)}</div></article>`;
+}
+function abrirFolha(){
+  const f=$("folha");
+  if(!aberto){f.hidden=true;document.body.style.overflow="";return}
+  const lim=limiteNovos(),c=IM.find(i=>i.id===aberto),s=c?null:(S.itens||[]).find(i=>i.id===aberto);
+  if(!c&&!s){aberto=null;f.hidden=true;document.body.style.overflow="";return}
+  $("folhaCorpo").innerHTML=c?card(c,lim):cardSite(s,lim);
+  f.hidden=false;document.body.style.overflow="hidden";
+}
 
 function estrela(id){return `<button class="star ${favs.has(id)?"on":""}" data-fav="${esc(id)}" aria-label="Favoritar">${favs.has(id)?"♥":"♡"}</button>`}
 function cardSite(i,lim){
@@ -202,6 +305,7 @@ function cardSite(i,lim){
     <div><div class="loc">${esc(i.titulo)}</div>${i.cidade?`<div class="addr">${esc(nome(i.cidade))} · PA</div>`:""}</div>
     ${i.preco?`<div class="money"><span class="preco">${esc(i.preco)}</span></div>`:""}
     <div class="snip">${esc(i.texto)}</div>
+    ${blocoLeilao(i,i.titulo,(i.site||"")+(i.preco?" · "+i.preco:""),i.id)}
     <div class="acts"><a class="pri" href="${esc(i.id)}" target="_blank" rel="noopener">Abrir no site do leilão</a></div>
    </div></article>`;
 }
@@ -221,24 +325,28 @@ function card(i,lim){
     <div><div class="money"><span class="preco">${brl(i.preco)}</span></div>
      <div class="aval">${leilao?"Lance mínimo":"Preço"} · avaliação ${i.desconto>0?`<s>${brl(i.avaliacao)}</s>`:brl(i.avaliacao)}</div></div>
     <div class="tags">${i.preco_ant?`<span class="tag price">${i.preco<i.preco_ant?"↓":"↑"} era ${brl(i.preco_ant)}</span>`:""}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}${i.financiamento?`<span class="tag fin">Aceita financiamento</span>`:""}</div>
+    ${blocoLeilao(i,i.tipo+" em "+nome(i.bairro)+", "+nome(i.cidade),"Caixa · "+(MOD[i.modalidade]||i.modalidade)+" · "+brl(i.preco),link)}
     <div class="acts"><a class="pri" href="${link}" target="_blank" rel="noopener">Ver na Caixa</a><a href="${mapa}" target="_blank" rel="noopener">Mapa</a><a href="${zap}" target="_blank" rel="noopener">Enviar</a></div>
    </div></article>`;
 }
 
 function render(){
-  const lim=limiteNovos(),el=$("lista");
+  const lim=limiteNovos(),el=$("lista");abrirFolha();
   const base=filtrar(IM),novos=base.filter(i=>i.visto_em>=lim);
   const sItens=filtrarSites(S.itens||[]),sNovos=sItens.filter(i=>i.visto_em&&i.visto_em>=lim);
   const b=$("bNovos");b.hidden=!(novos.length+sNovos.length);b.textContent=novos.length+sNovos.length;
+  const favTodos=IM.filter(i=>favs.has(i.id)).concat((S.itens||[]).filter(i=>favs.has(i.id)));
+  const pertos=favTodos.filter(i=>{const d=dataLeilao(i);if(!d)return false;const h=(d-new Date())/36e5;return h>=0&&h<=48}).length;
+  $("bFav").hidden=!pertos;$("bFav").textContent=pertos;
   const onde=st.cidades.size===0?"no Pará":"em "+[...st.cidades].map(nome).join(", ");
-  $("ordem").hidden=st.aba==="sites"||st.aba==="saiu";
+  $("ordem").hidden=st.aba==="sites"||st.aba==="saiu"||st.aba==="fav";
   if(st.aba==="sites"){
     const lista=[...sItens].sort((a,b)=>(b.visto_em||"").localeCompare(a.visto_em||"")||a.site.localeCompare(b.site));
     $("tit").textContent=lista.length+(lista.length===1?" imóvel":" imóveis")+" dos leiloeiros";$("sub").textContent=onde+(sNovos.length?" · "+sNovos.length+" novos":"");
     const ok=(S.sites||[]).filter(x=>x.status==="ok").length;
     el.innerHTML=`<details class="st"><summary>Sites monitorados: ${ok} de ${(S.sites||[]).length} lidos</summary>${(S.sites||[]).map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener"><span><i class="dot ${esc(x.status)}"></i>${esc(x.nome)}</span>
       <small>${x.status==="atalho"?"abrir busca":x.status==="aguardando"?"aguardando 1ª leitura":x.status==="erro"?"não consegui ler · abrir":x.qtd+" imóveis"+(x.novos?" · "+x.novos+" novos":"")}</small></a>`).join("")}</details>`+
-      (lista.length?lista.map(i=>cardSite(i,lim)).join(""):`<div class="empty">Sem imóveis dos sites com esses filtros. Toque em "Pará todo" para ver todos.</div>`);
+      (lista.length?lista.map(i=>miniSite(i,lim)).join(""):`<div class="empty">Sem imóveis dos sites com esses filtros. Toque em "Pará todo" para ver todos.</div>`);
     return;
   }
   if(st.aba==="saiu"){
@@ -255,25 +363,33 @@ function render(){
   l=[...l].sort(ord);
   const total=l.length+extra.length, r=D.resumo||{};
   $("tit").textContent=total+({novos:" imóveis novos",fav:" favoritos",todos:" imóveis da Caixa"}[st.aba]);
-  $("sub").textContent=st.aba==="fav"?"guardados neste aparelho":onde+(st.aba==="novos"&&r.preco_mudou?" · "+r.preco_mudou+" mudaram de preço":"");
+  $("sub").textContent=st.aba==="fav"?(pertos?pertos+" com leilão nas próximas 48 h":"guardados neste aparelho"):onde+(st.aba==="novos"&&r.preco_mudou?" · "+r.preco_mudou+" mudaram de preço":"");
   const vazio={novos:"Nenhum imóvel novo nessas cidades no período. O robô confere as listas toda manhã.",fav:"Toque no ♡ de um imóvel para guardar aqui.",todos:'Nenhum imóvel com esses filtros. Toque em "Pará todo" ou limpe os filtros.'}[st.aba];
-  const cards=l.map(i=>card(i,lim)).concat(extra.map(i=>cardSite(i,lim)));
+  let cards;
+  if(st.aba==="fav"){
+    const dt=i=>{const d=dataLeilao(i);return d&&d>=new Date()?d.getTime():d?9e15:8e15};
+    cards=l.map(i=>[dt(i),mini(i,lim)]).concat(extra.map(i=>[dt(i),miniSite(i,lim)])).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+  }else cards=l.map(i=>mini(i,lim)).concat(extra.map(i=>miniSite(i,lim)));
   el.innerHTML=cards.slice(0,st.limite).join("")+(cards.length>st.limite?`<button class="mais" id="mais">Mostrar mais (${cards.length-st.limite} restantes)</button>`:"")||`<div class="empty">${vazio}</div>`;
 }
 
+function favoritar(e){const b=e.target.closest("[data-fav]");if(!b)return false;
+  const id=b.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);salvar();render();return true}
 $("lista").onclick=e=>{
-  if(e.target.id==="mais"){st.limite+=30;render();return}
-  const b=e.target.closest("[data-fav]");if(!b)return;
-  const id=b.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);salvar();render()};
-document.querySelector("nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;st.aba=b.dataset.aba;st.limite=30;
+  if(e.target.id==="mais"){st.limite+=40;render();return}
+  if(favoritar(e))return;
+  const m=e.target.closest("[data-abrir]");if(m){aberto=m.dataset.abrir;abrirFolha()}};
+$("folha").onclick=e=>{if(e.target.id==="folha"||e.target.id==="fechar"){aberto=null;abrirFolha();return}favoritar(e)};
+document.querySelector("nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;st.aba=b.dataset.aba;st.limite=40;
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));window.scrollTo(0,0);render()};
-["tipo","modal","ordem","periodo"].forEach(id=>$(id).onchange=e=>{st[id]=id==="periodo"?+e.target.value:e.target.value;st.limite=30;salvar();marcar();render()});
-$("q").oninput=e=>{st.q=e.target.value;st.limite=30;render()};
-$("max").oninput=e=>{st.max=parseFloat(e.target.value)||0;st.limite=30;marcar();render()};
-$("fin").onchange=e=>{st.fin=e.target.checked;st.limite=30;marcar();render()};
+["tipo","modal","ordem","periodo"].forEach(id=>$(id).onchange=e=>{st[id]=id==="periodo"?+e.target.value:e.target.value;st.limite=40;salvar();marcar();render()});
+document.body.onchange=e=>{const el=e.target.closest("[data-dt]");if(!el)return;if(el.value)datas[el.dataset.dt]=el.value;else delete datas[el.dataset.dt];salvar();render()};
+$("q").oninput=e=>{st.q=e.target.value;st.limite=40;render()};
+$("max").oninput=e=>{st.max=parseFloat(e.target.value)||0;st.limite=40;marcar();render()};
+$("fin").onchange=e=>{st.fin=e.target.checked;st.limite=40;marcar();render()};
 function marcar(){const n=[st.tipo,st.modal,st.max,st.fin].filter(Boolean).length;$("btnFiltros").textContent="Filtros"+(n?" ("+n+")":"");$("btnFiltros").classList.toggle("on",n>0||!$("painel").hidden)}
 $("btnFiltros").onclick=()=>{const p=$("painel");p.hidden=!p.hidden;$("btnFiltros").setAttribute("aria-expanded",String(!p.hidden));marcar()};
-$("limpar").onclick=()=>{st.tipo="";st.modal="";st.max=0;st.fin=false;$("tipo").value="";$("modal").value="";$("max").value="";$("fin").checked=false;st.limite=30;marcar();render()};
+$("limpar").onclick=()=>{st.tipo="";st.modal="";st.max=0;st.fin=false;$("tipo").value="";$("modal").value="";$("max").value="";$("fin").checked=false;st.limite=40;marcar();render()};
 carregar().catch(()=>{$("lista").innerHTML='<div class="empty">Não consegui carregar a lista. Verifique a internet.</div>'});
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
