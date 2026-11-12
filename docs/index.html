@@ -256,8 +256,8 @@ function blocoLeilao(i,titulo,desc,link){
   const d=dataLeilao(i),h=d?(d-new Date())/36e5:null,perto=d&&h>=0&&h<=48;
   const quando=d?d.toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"2-digit"})+" às "+p2(d.getHours())+":"+p2(d.getMinutes()):"";
   return `<div class="leilao ${perto?"perto":""}">
-    <b>${d?"Leilão "+esc(quando)+" · "+falta(d):"Sem data de leilão informada"}</b>
-    <label>Data<input type="datetime-local" data-dt="${esc(i.id)}" value="${paraInput(d)}" aria-label="Data e hora do leilão"></label>
+    <b>${d?"Leilão "+esc(quando)+" · "+falta(d):"Favoritado. Informe a data do leilão para criar o lembrete:"}</b>${!d&&i.modalidade&&i.modalidade!=="Leilão SFI - Edital Único"?`<span style="font-size:12.5px;color:var(--muted)">Este imóvel é ${esc((MOD[i.modalidade]||i.modalidade).toLowerCase())}, sem leilão com data marcada. Se quiser um lembrete mesmo assim, escolha a data abaixo.</span>`:""}
+    <label>Data e hora<input type="datetime-local" data-dt="${esc(i.id)}" value="${paraInput(d)}" aria-label="Data e hora do leilão"></label>
     ${d&&h>0?`<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics(titulo,d,desc,link))}" download="leilao.ics">Lembrar 48h antes (calendário)</a>`:""}
   </div>`;
 }
@@ -374,7 +374,7 @@ function render(){
 }
 
 function favoritar(e){const b=e.target.closest("[data-fav]");if(!b)return false;
-  const id=b.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);salvar();render();return true}
+  const id=b.dataset.fav;if(favs.has(id))favs.delete(id);else{favs.add(id);aberto=id}salvar();render();return true}
 $("lista").onclick=e=>{
   if(e.target.id==="mais"){st.limite+=40;render();return}
   if(favoritar(e))return;
