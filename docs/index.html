@@ -92,7 +92,7 @@ font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:c
 .mini .loc.duas{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px}
 .mini .addr{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mini .preco{font-size:16px;margin-top:1px}
-.mini .dt{font-size:11.5px;font-weight:700;color:var(--muted);margin-top:2px}
+.mini .dt{font-size:11.5px;font-weight:700;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mini .dt.perto{color:var(--hot)}
 #folha{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
 #folha .dentro{width:100%;max-width:520px;max-height:92%;overflow:auto;background:var(--bg);border-radius:18px 18px 0 0;padding:10px 12px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
@@ -148,6 +148,7 @@ nav .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--hot);
     <option value="menor">Menor preço</option>
     <option value="maior">Maior preço</option>
     <option value="recente">Mais recentes</option>
+    <option value="data">Leilão mais próximo</option>
   </select>
 </div>
 <main id="lista"></main>
@@ -230,43 +231,51 @@ function dataDoTexto(t){
   if(!l.length)return null;l.sort((a,b)=>a-b);
   return l.find(d=>d>=new Date())||l[l.length-1];
 }
-function dataLeilao(i){
-  if(datas[i.id]){const d=new Date(datas[i.id]);if(!isNaN(d))return d}
-  return i.texto?dataDoTexto(i.texto):null;
+const ROT={"1":"1º leilão","2":"2º leilão","L":"Licitação aberta","V":"Fim da venda online"};
+function eventos(i){
+  // data digitada por você vale mais; depois as datas da página da Caixa; depois a data lida no site do leiloeiro
+  if(datas[i.id]){const d=new Date(datas[i.id]);if(!isNaN(d))return [{r:"Leilão",d}]}
+  const l=D&&D.leiloes&&D.leiloes[i.id];
+  if(l)return l.map(e=>({r:ROT[e[0]]||"Leilão",d:new Date(e[1])})).filter(e=>!isNaN(e.d)).sort((a,b)=>a.d-b.d);
+  const d=i.texto?dataDoTexto(i.texto):null;return d?[{r:"Leilão",d}]:[];
 }
+function proximo(i){const l=eventos(i);return l.find(e=>e.d>=new Date())||l[l.length-1]||null}
+function dataLeilao(i){const p=proximo(i);return p?p.d:null}
+const curta=d=>p2(d.getDate())+"/"+p2(d.getMonth()+1)+" "+p2(d.getHours())+":"+p2(d.getMinutes());
 const paraInput=d=>d?`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}T${p2(d.getHours())}:${p2(d.getMinutes())}`:"";
 function falta(d){
   const h=(d-new Date())/36e5;
   if(h<0)return "já passou";if(h<1)return "é agora";if(h<48)return "faltam "+Math.round(h)+" h";
   return "faltam "+Math.round(h/24)+" dias";
 }
-function ics(titulo,d,desc,link){
+function ics(titulo,d,desc,link){ // titulo já vem com o tipo do evento
   const u=x=>`${x.getUTCFullYear()}${p2(x.getUTCMonth()+1)}${p2(x.getUTCDate())}T${p2(x.getUTCHours())}${p2(x.getUTCMinutes())}00Z`;
   const e=x=>String(x).replace(/\\/g,"\\\\").replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n");
   const fim=new Date(d.getTime()+36e5);
   return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Leilao Explore//PT-BR","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
    "UID:"+Date.now()+"-"+Math.round(d/1000)+"@leilao-explore","DTSTAMP:"+u(new Date()),"DTSTART:"+u(d),"DTEND:"+u(fim),
-   "SUMMARY:"+e("Leilão: "+titulo),"DESCRIPTION:"+e(desc+"\n"+link),"URL:"+link,
-   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+e("Leilão em 48 horas: "+titulo),"TRIGGER:-PT48H","END:VALARM",
-   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+e("Leilão em 2 horas: "+titulo),"TRIGGER:-PT2H","END:VALARM",
+   "SUMMARY:"+e(titulo),"DESCRIPTION:"+e(desc+"\n"+link),"URL:"+link,
+   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+e("Em 48 horas: "+titulo),"TRIGGER:-PT48H","END:VALARM",
+   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+e("Em 2 horas: "+titulo),"TRIGGER:-PT2H","END:VALARM",
    "END:VEVENT","END:VCALENDAR"].join("\r\n");
 }
 function blocoLeilao(i,titulo,desc,link){
   if(!favs.has(i.id))return "";
-  const d=dataLeilao(i),h=d?(d-new Date())/36e5:null,perto=d&&h>=0&&h<=48;
+  const pr=proximo(i),d=pr?pr.d:null,rot=pr?pr.r:"Leilão",h=d?(d-new Date())/36e5:null,perto=d&&h>=0&&h<=48;
   const quando=d?d.toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"2-digit"})+" às "+p2(d.getHours())+":"+p2(d.getMinutes()):"";
   return `<div class="leilao ${perto?"perto":""}">
-    <b>${d?"Leilão "+esc(quando)+" · "+falta(d):"Favoritado. Informe a data do leilão para criar o lembrete:"}</b>${!d&&i.modalidade&&i.modalidade!=="Leilão SFI - Edital Único"?`<span style="font-size:12.5px;color:var(--muted)">Este imóvel é ${esc((MOD[i.modalidade]||i.modalidade).toLowerCase())}, sem leilão com data marcada. Se quiser um lembrete mesmo assim, escolha a data abaixo.</span>`:""}
+    <b>${d?esc(rot)+" "+esc(quando)+" · "+falta(d):"Favoritado. Informe a data do leilão para criar o lembrete:"}</b>${!d&&i.modalidade&&i.modalidade!=="Leilão SFI - Edital Único"?`<span style="font-size:12.5px;color:var(--muted)">Este imóvel é ${esc((MOD[i.modalidade]||i.modalidade).toLowerCase())}: fica à venda sem data marcada na Caixa. Se quiser um lembrete mesmo assim, escolha a data abaixo.</span>`:""}
     <label>Data e hora<input type="datetime-local" data-dt="${esc(i.id)}" value="${paraInput(d)}" aria-label="Data e hora do leilão"></label>
-    ${d&&h>0?`<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics(titulo,d,desc,link))}" download="leilao.ics">Lembrar 48h antes (calendário)</a>`:""}
+    ${d&&h>0?`<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics(rot+": "+titulo,d,desc,link))}" download="leilao.ics">Lembrar 48h antes (calendário)</a>`:""}
   </div>`;
 }
 
 function linhaData(i){
-  if(!favs.has(i.id))return "";
-  const d=dataLeilao(i);if(!d)return `<div class="dt">sem data de leilão</div>`;
-  const h=(d-new Date())/36e5;
-  return `<div class="dt ${h>=0&&h<=48?"perto":""}">Leilão ${p2(d.getDate())}/${p2(d.getMonth()+1)} · ${falta(d)}</div>`;
+  const pr=proximo(i);
+  if(!pr)return favs.has(i.id)?`<div class="dt">sem data de leilão</div>`:"";
+  const d=pr.d,h=(d-new Date())/36e5;
+  const c={"Licitação aberta":"Licitação","Fim da venda online":"Fim da venda"}[pr.r]||pr.r;
+  return `<div class="dt ${h>=0&&h<=48?"perto":""}">${esc(c)} ${p2(d.getDate())}/${p2(d.getMonth()+1)}${h>=0&&h<=48?" · "+falta(d).replace("faltam ","em "):h<0?" · passou":""}</div>`;
 }
 function mini(i,lim){
   const novo=i.visto_em>=lim, foto="https://venda-imoveis.caixa.gov.br/fotos/F"+String(i.id).padStart(13,"0")+"21.jpg";
@@ -295,6 +304,7 @@ function abrirFolha(){
   f.hidden=false;document.body.style.overflow="hidden";
 }
 
+const kd=i=>{const d=dataLeilao(i);return d&&d>=new Date()?d.getTime():9e15};
 function estrela(id){return `<button class="star ${favs.has(id)?"on":""}" data-fav="${esc(id)}" aria-label="Favoritar">${favs.has(id)?"♥":"♡"}</button>`}
 function cardSite(i,lim){
   const novo=i.visto_em&&i.visto_em>=lim;
@@ -324,6 +334,7 @@ function card(i,lim){
     <div><div class="kicker">${esc(i.tipo)} · ${esc(nome(i.cidade))}</div><div class="loc">${esc(nome(i.bairro))}</div><div class="addr">${esc(nome(i.endereco))}</div></div>
     <div><div class="money"><span class="preco">${brl(i.preco)}</span></div>
      <div class="aval">${leilao?"Lance mínimo":"Preço"} · avaliação ${i.desconto>0?`<s>${brl(i.avaliacao)}</s>`:brl(i.avaliacao)}</div></div>
+    ${eventos(i).length?`<div class="addr"><b>Datas:</b> ${eventos(i).map(e=>esc(e.r)+" "+curta(e.d)).join(" · ")}</div>`:""}
     <div class="tags">${i.preco_ant?`<span class="tag price">${i.preco<i.preco_ant?"↓":"↑"} era ${brl(i.preco_ant)}</span>`:""}${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}${i.financiamento?`<span class="tag fin">Aceita financiamento</span>`:""}</div>
     ${blocoLeilao(i,i.tipo+" em "+nome(i.bairro)+", "+nome(i.cidade),"Caixa · "+(MOD[i.modalidade]||i.modalidade)+" · "+brl(i.preco),link)}
     <div class="acts"><a class="pri" href="${link}" target="_blank" rel="noopener">Ver na Caixa</a><a href="${mapa}" target="_blank" rel="noopener">Mapa</a><a href="${zap}" target="_blank" rel="noopener">Enviar</a></div>
@@ -359,7 +370,7 @@ function render(){
   }
   let l=st.aba==="novos"?novos:st.aba==="fav"?IM.filter(i=>favs.has(i.id)):base;
   const extra=st.aba==="novos"?sNovos:st.aba==="fav"?(S.itens||[]).filter(i=>favs.has(i.id)):[];
-  const ord={desc:(a,b)=>b.desconto-a.desconto,menor:(a,b)=>a.preco-b.preco,maior:(a,b)=>b.preco-a.preco,recente:(a,b)=>b.visto_em.localeCompare(a.visto_em)||b.desconto-a.desconto}[st.ordem];
+  const ord={desc:(a,b)=>b.desconto-a.desconto,menor:(a,b)=>a.preco-b.preco,maior:(a,b)=>b.preco-a.preco,recente:(a,b)=>b.visto_em.localeCompare(a.visto_em)||b.desconto-a.desconto,data:(a,b)=>kd(a)-kd(b)||b.desconto-a.desconto}[st.ordem]||((a,b)=>b.desconto-a.desconto);
   l=[...l].sort(ord);
   const total=l.length+extra.length, r=D.resumo||{};
   $("tit").textContent=total+({novos:" imóveis novos",fav:" favoritos",todos:" imóveis da Caixa"}[st.aba]);
