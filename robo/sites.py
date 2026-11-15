@@ -211,6 +211,14 @@ async def ler_site(navegador, site):
                 itens.setdefault(it["id"], it)
             if not cards or len(itens) == antes:
                 break  # acabou a lista de paginas
+        if not itens:
+            # anota o que o robo viu, para descobrir se foi bloqueio
+            try:
+                titulo = await pagina.title()
+                corpo = await pagina.evaluate("() => (document.body ? document.body.innerText : '').replace(/\\s+/g, ' ').slice(0, 160)")
+                return [], f"0 imóveis | página: {titulo[:60]} | texto: {corpo}"
+            except Exception:
+                pass
         return list(itens.values()), ""
     except Exception as e:
         return [], str(e)[:200]
